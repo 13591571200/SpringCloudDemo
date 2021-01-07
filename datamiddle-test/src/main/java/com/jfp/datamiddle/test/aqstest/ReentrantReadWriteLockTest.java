@@ -1,5 +1,6 @@
 package com.jfp.datamiddle.test.aqstest;
 
+import java.time.LocalTime;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
@@ -10,9 +11,34 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  **/
 public class ReentrantReadWriteLockTest {
 
-    public static void main(String[] args) {
-        ReentrantReadWriteLock reentrantReadWriteLock = new ReentrantReadWriteLock();
-        reentrantReadWriteLock.readLock().lock();
-        reentrantReadWriteLock.writeLock().lock();
+    static ReentrantReadWriteLock reentrantReadWriteLock = new ReentrantReadWriteLock();
+
+    public static void main(String[] args) throws InterruptedException {
+        ReentrantReadWriteLock.WriteLock writeLock = reentrantReadWriteLock.writeLock();
+        writeLock.lock();
+        Thread.sleep(2000);
+        System.out.println("writeLock");
+        writeLock.unlock();
+
+        new Thread(new MThread()).start();
+        new Thread(new MThread()).start();
+        new Thread(new MThread()).start();
+    }
+
+    public static class MThread implements Runnable{
+
+        @Override
+        public void run() {
+            ReentrantReadWriteLock.ReadLock readLock = reentrantReadWriteLock.readLock();
+            readLock.lock();
+            try {
+                System.out.println("readLock");
+                Thread.sleep(100000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            readLock.unlock();
+
+        }
     }
 }

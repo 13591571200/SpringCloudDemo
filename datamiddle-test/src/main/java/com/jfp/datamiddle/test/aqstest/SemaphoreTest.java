@@ -1,5 +1,6 @@
 package com.jfp.datamiddle.test.aqstest;
 
+import java.time.LocalTime;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.LockSupport;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -34,11 +35,10 @@ public class SemaphoreTest {
                 semaphore.acquire();
                 Thread.sleep(2000);
                 semaphore.release();
-                System.out.println(Thread.currentThread().getName() + " release");
+                System.out.println(Thread.currentThread().getName() + " release " + LocalTime.now());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
         }
     }
 }

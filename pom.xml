@@ -23,6 +23,7 @@
         <module>datamiddle-eureka</module>
         <module>datamiddle-redis</module>
         <module>datamiddle-test</module>
+        <module>datamiddle-datasource</module>
     </modules>
 
     <dependencyManagement>
